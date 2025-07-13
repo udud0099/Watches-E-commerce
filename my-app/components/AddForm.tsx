@@ -1,9 +1,24 @@
-import React from "react";
+import { addAction } from "@/utils/addAction";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 const AddForm = () => {
+  const router = useRouter();
+  async function clientAddAction(formData: FormData) {
+    const { error, success } = await addAction(formData);
+
+    if (error) {
+      // toast notification
+      toast.error(error);
+    }
+    if (success) {
+      toast.success(success);
+      router.push("/");
+    }
+  }
   return (
     <div>
-      <form action="">
+      <form action={clientAddAction}>
         <div className="bg-white text-black p-8 flex gap-4 flex-col">
           <div>
             <label htmlFor="">
